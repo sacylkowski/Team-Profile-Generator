@@ -1,8 +1,11 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+
 const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
+
+const generatePage = require("./src/page-template");
 
 function addManager() {
     inquirer.prompt([
@@ -74,37 +77,63 @@ function addEngineer() {
     inquirer.prompt([
         {
             type: "input",
-            name: "managerName",
-            message: "What is the name of the manager?"
+            name: "engineerName",
+            message: "What is the name of the engineer?"
         },
         {
             type: "input",
-            name: "managerId",
-            message: "What is the manager's ID?"
+            name: "engineerId",
+            message: "What is the engineer's ID?"
         },
         {
             type: "input",
-            name: "managerEmail",
-            message: "What is the manager's E-mail?"
+            name: "engineerEmail",
+            message: "What is the engineer's E-mail?"
         },
         {
             type: "input",
-            name: "managerOfficeNum",
-            message: "What is the manager's office number?"
+            name: "engineerGithub",
+            message: "What is the engineer's GitHub username?"
         }
     ])
     .then(answers => {
-        let { managerName, managerID, managerEmail, managerOfficeNum } = answers;
+        let { engineerName, engineerId, engineerEmail, engineerGithub } = answers;
         console.log(answers);
 
-        team.manager = new Manager(managerName, managerID, managerEmail, managerOfficeNum);
+        team.engineer.push(new Engineer(engineerName, engineerId, engineerEmail, engineerGithub));
 
         addTeamMember();
     })
 }
 
-function generatePage() {
-
+function addTeamMember() {
+    inquirer.prompt({
+        type: "list",
+        name: "addTeamMember",
+        message: "What type of team member would you like added?",
+        choice: ["Engineer", "Intern", "I'm finished adding team members"]
+    })
+    .then(answers => {
+        let { addTeamMember } = answers;
+        if (addTeamMember === "Intern") {
+            addIntern();
+        } else if (addTeamMember === "Engineer") {
+            addEngineer();
+        } else if (addTeamMember === "I'm finished adding team members") {
+            generatePage();
+        }
+    })
 }
+
+function generatePage() {
+    fs.writeFile("./dist/index.html", fileContent, function(err) {
+        if (err) {
+            return console.error(err);
+        } else {
+            console.log("Your team directory has been made!  Checkout index.html to see the page.")
+        }
+    })
+
+};
 
 addManager();
