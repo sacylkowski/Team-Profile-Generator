@@ -1,11 +1,15 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 
+// importing classes
 const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 
-const generatePage = require("./src/page-template");
+// const generatePage = require("./src/page-template");
+
+// empty array for the team
+let teamMembers = [];
 
 function addManager() {
     inquirer.prompt([
@@ -33,8 +37,9 @@ function addManager() {
     .then(answers => {
         let { managerName, managerID, managerEmail, managerOfficeNum } = answers;
         console.log(answers);
+        const manager = new Manager(managerName, managerID, managerEmail, managerOfficeNum);
 
-        team.manager = new Manager(managerName, managerID, managerEmail, managerOfficeNum);
+        teamMembers.push(manager);
 
         addTeamMember();
     })
@@ -66,8 +71,9 @@ function addIntern() {
     .then(answers => {
         let { internName, internID, internEmail, internSchoolName } = answers;
         console.log(answers);
+        const intern = new Intern(internName, internID, internEmail, internSchoolName);
 
-        team.intern.push(new Intern(internName, internID, internEmail, internSchoolName));
+        teamMembers.push(intern);
 
         addTeamMember();
     })
@@ -99,9 +105,10 @@ function addEngineer() {
     .then(answers => {
         let { engineerName, engineerId, engineerEmail, engineerGithub } = answers;
         console.log(answers);
+        const engineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
 
-        team.engineer.push(new Engineer(engineerName, engineerId, engineerEmail, engineerGithub));
-
+        teamMembers.push(engineer);
+        
         addTeamMember();
     })
 }
