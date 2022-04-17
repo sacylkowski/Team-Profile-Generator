@@ -11,7 +11,7 @@ test("get manager office number", () => {
 
 test("can get office number when getOfficeNumber() is called", () => {
     const employee = new Manager(employeeValue, idValue, emailValue, officeNum);
-    expect(employee.getId()).toBe(idValue);
+    expect(employee.getOfficeNumber()).toBe(this.office);
 });
 
 test("can get manager role when getRole() is called", () => {
