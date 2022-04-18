@@ -137,24 +137,22 @@ function addTeamMember() {
         })
 }
 
-
-// calling to addManager once the program is running
-addManager()
-    .then(teamMembers => {
-        // writing the data to the new HTML page
-        fs.writeFile("./dist/index.html", templateHtml(teamMembers), err => {
-            if (err) {
-                return console.error(err);
-            } else {
-                console.log("Your team directory has been made!  Checkout index.html to see the page.")
-                fs.copyFile("./src/style.css", "./dist/style.css", err => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    };
-                });
-            };
-        });
-
+function generatePage()
+    // writing the data to the new HTML page
+    fs.writeFile("./dist/index.html", templateHtml(teamMembers), err => {
+        if (err) {
+            return console.error(err);
+        } else {
+            console.log("Your team directory has been made!  Checkout index.html to see the page.")
+            fs.copyFile("./src/style.css", "./dist/style.css", err => {
+                if (err) {
+                    console.error(err);
+                    return;
+                };
+            });
+        };
     });
-    
+
+
+    // calling to addManager once the program is running
+    addManager();
