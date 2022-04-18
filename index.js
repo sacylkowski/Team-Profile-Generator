@@ -6,11 +6,12 @@ const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 
-// const generatePage = require("./src/page-template");
+const templateHtml = require("./src/page-template");
 
 // empty array for the team
 let teamMembers = [];
 
+// first add Manager
 function addManager() {
     inquirer.prompt([
         {
@@ -41,10 +42,12 @@ function addManager() {
 
         teamMembers.push(manager);
 
+        // once manager is added to the array, then you can add other members
         addTeamMember();
     })
 }
 
+// Intern prompt questions
 function addIntern() {
     inquirer.prompt([
         {
@@ -79,6 +82,7 @@ function addIntern() {
     })
 }
 
+// Engineer prompt questions
 function addEngineer() {
     inquirer.prompt([
         {
@@ -108,17 +112,18 @@ function addEngineer() {
         const engineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
 
         teamMembers.push(engineer);
-        
+
         addTeamMember();
     })
 }
 
+// picking a type of team member to add or finishing up
 function addTeamMember() {
     inquirer.prompt({
         type: "list",
         name: "addTeamMember",
         message: "What type of team member would you like added?",
-        choice: ["Engineer", "Intern", "I'm finished adding team members"]
+        choices: ["Engineer", "Intern", "I'm finished adding team members"]
     })
     .then(answers => {
         let { addTeamMember } = answers;
@@ -132,15 +137,24 @@ function addTeamMember() {
     })
 }
 
+// writing the data to the new HTML page
 function generatePage() {
-    fs.writeFile("./dist/index.html", fileContent, function(err) {
+    
+    fs.writeFile("./dist/index.html", templateHtml(teamMembers), err => {
         if (err) {
             return console.error(err);
         } else {
             console.log("Your team directory has been made!  Checkout index.html to see the page.")
-        }
-    })
+            // fs.copyFile("./src/style.css", "./dist/style.css", err => {
+            //     if (err) {
+            //         console.error(err);
+            //         return;
+            //     };
+            // });
+        };
+    });
 
 };
 
+// calling to addManager once the program is running
 addManager();
