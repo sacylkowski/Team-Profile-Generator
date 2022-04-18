@@ -6,7 +6,7 @@ const addManager = manager => {
         <h2>Manager</h2>
         <h3>${manager.name}</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body bg-light">
             <p>ID: ${manager.id}</p>
             <p>E-mail: <a href="mailto:${manager.email}">${manager.email}</a></p>
             <p>Office Number: ${manager.office}</p> 
@@ -23,7 +23,7 @@ const addIntern = intern => {
         <h2>Intern</h2>
         <h3>${intern.name}</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body bg-light">
             <p>ID: ${intern.id}</p>
             <p>E-mail: <a href="mailto:${intern.email}">${intern.email}</a></p>
             <p>School: ${intern.school}</p> 
@@ -35,12 +35,12 @@ const addIntern = intern => {
 // creating the engineer card
 const addEngineer = enginner => {
     return `
-    <div class="col-4 m-2 p-2 border border-dark card">
+    <div class="card col-4 m-2 p-2 border border-dark">
         <div class="card-header">
         <h2>Engineer</h2>
         <h3>${Engineer.name}</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body bg-light">
             <p>ID: ${engineer.id}</p>
             <p>E-mail: <a href="mailto:${engineer.email}">${engineer.email}</a></p>
             <p>GitHub: <a href="https://github.com/${engineer.github}" target="_blank">${engineer.github}</a></p> 
@@ -49,7 +49,41 @@ const addEngineer = enginner => {
         `
 }
 
-const generateTeamHTML = teamMemberCards => {
+// pushing the team member array to the the page
+
+const templateHtml = (data) => {
+
+    pageArray = [];
+
+    for (let i = 0; i < data.length; i++) {
+        const teamMember = data[i];
+        const role = teamMember.getRole();
+
+        if (role === "Manager") {
+            const managerCard = addManager(teamMember);
+
+            pageArray.push(managerCard);
+        }
+        if (role === "Intern") {
+            const internCard = addIntern(teamMember);
+
+            pageArray.push(internCard);
+        }
+        if (role === "Engineer") {
+            const engineerCard = addEngineer(teamMember);
+
+            pageArray.push(engineerCard);
+        }
+    }
+
+    const teamMemberCards = pageArray.join("");
+
+    const generateDirectory = generateDirectoryHtml(teamMemberCards);
+    return generateDirectory;
+}
+
+// generating the directory in HTML
+const generateDirectoryHtml = teamMemberCards => {
     return `
     <!DOCTYPE html>
     <html lang="en">

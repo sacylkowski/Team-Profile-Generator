@@ -35,16 +35,16 @@ function addManager() {
             message: "What is the manager's office number?"
         }
     ])
-    .then(answers => {
-        let { managerName, managerID, managerEmail, managerOfficeNum } = answers;
-        console.log(answers);
-        const manager = new Manager(managerName, managerID, managerEmail, managerOfficeNum);
+        .then(answers => {
+            let { managerName, managerID, managerEmail, managerOfficeNum } = answers;
+            console.log(answers);
+            const manager = new Manager(managerName, managerID, managerEmail, managerOfficeNum);
 
-        teamMembers.push(manager);
+            teamMembers.push(manager);
 
-        // once manager is added to the array, then you can add other members
-        addTeamMember();
-    })
+            // once manager is added to the array, then you can add other members
+            addTeamMember();
+        })
 }
 
 // Intern prompt questions
@@ -71,15 +71,15 @@ function addIntern() {
             message: "What is the name of the intern's school?"
         }
     ])
-    .then(answers => {
-        let { internName, internID, internEmail, internSchoolName } = answers;
-        console.log(answers);
-        const intern = new Intern(internName, internID, internEmail, internSchoolName);
+        .then(answers => {
+            let { internName, internID, internEmail, internSchoolName } = answers;
+            console.log(answers);
+            const intern = new Intern(internName, internID, internEmail, internSchoolName);
 
-        teamMembers.push(intern);
+            teamMembers.push(intern);
 
-        addTeamMember();
-    })
+            addTeamMember();
+        })
 }
 
 // Engineer prompt questions
@@ -106,15 +106,15 @@ function addEngineer() {
             message: "What is the engineer's GitHub username?"
         }
     ])
-    .then(answers => {
-        let { engineerName, engineerId, engineerEmail, engineerGithub } = answers;
-        console.log(answers);
-        const engineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
+        .then(answers => {
+            let { engineerName, engineerId, engineerEmail, engineerGithub } = answers;
+            console.log(answers);
+            const engineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub);
 
-        teamMembers.push(engineer);
+            teamMembers.push(engineer);
 
-        addTeamMember();
-    })
+            addTeamMember();
+        })
 }
 
 // picking a type of team member to add or finishing up
@@ -125,36 +125,36 @@ function addTeamMember() {
         message: "What type of team member would you like added?",
         choices: ["Engineer", "Intern", "I'm finished adding team members"]
     })
-    .then(answers => {
-        let { addTeamMember } = answers;
-        if (addTeamMember === "Intern") {
-            addIntern();
-        } else if (addTeamMember === "Engineer") {
-            addEngineer();
-        } else if (addTeamMember === "I'm finished adding team members") {
-            generatePage();
-        }
-    })
+        .then(answers => {
+            let { addTeamMember } = answers;
+            if (addTeamMember === "Intern") {
+                addIntern();
+            } else if (addTeamMember === "Engineer") {
+                addEngineer();
+            } else if (addTeamMember === "I'm finished adding team members") {
+                generatePage();
+            }
+        })
 }
 
-// writing the data to the new HTML page
-function generatePage() {
-    
-    fs.writeFile("./dist/index.html", templateHtml(teamMembers), err => {
-        if (err) {
-            return console.error(err);
-        } else {
-            console.log("Your team directory has been made!  Checkout index.html to see the page.")
-            // fs.copyFile("./src/style.css", "./dist/style.css", err => {
-            //     if (err) {
-            //         console.error(err);
-            //         return;
-            //     };
-            // });
-        };
-    });
-
-};
 
 // calling to addManager once the program is running
-addManager();
+addManager()
+    .then(teamMembers => {
+        // writing the data to the new HTML page
+        fs.writeFile("./dist/index.html", templateHtml(teamMembers), err => {
+            if (err) {
+                return console.error(err);
+            } else {
+                console.log("Your team directory has been made!  Checkout index.html to see the page.")
+                fs.copyFile("./src/style.css", "./dist/style.css", err => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    };
+                });
+            };
+        });
+
+    });
+    
