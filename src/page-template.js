@@ -2,14 +2,14 @@
 const addManager = manager => {
     return `
     <div class="col-4 m-2 p-2 border border-dark card">
-        <div class="card-header">
+        <div class="card-header manager">
         <h2>Manager</h2>
         <h3>${manager.name}</h3>
         </div>
         <div class="card-body bg-light">
             <p>ID: ${manager.id}</p>
             <p>E-mail: <a href="mailto:${manager.email}">${manager.email}</a></p>
-            <p>Office Number: ${manager.office}</p> 
+            <p>Office Number: ${manager.officeNumber}</p> 
         </div>    
     </div>    
         `
@@ -19,31 +19,31 @@ const addManager = manager => {
 const addIntern = intern => {
     return `
     <div class="col-4 m-2 p-2 border border-dark card">
-        <div class="card-header">
+        <div class="card-header intern">
         <h2>Intern</h2>
         <h3>${intern.name}</h3>
         </div>
         <div class="card-body bg-light">
             <p>ID: ${intern.id}</p>
             <p>E-mail: <a href="mailto:${intern.email}">${intern.email}</a></p>
-            <p>School: ${intern.school}</p> 
+            <p>School: ${intern.schoolN}</p> 
         </div>    
     </div>    
         `
 }
 
 // creating the engineer card
-const addEngineer = enginner => {
+const addEngineer = engineer => {
     return `
     <div class="card col-4 m-2 p-2 border border-dark">
-        <div class="card-header">
+        <div class="card-header engineer">
         <h2>Engineer</h2>
-        <h3>${Engineer.name}</h3>
+        <h3>${engineer.name}</h3>
         </div>
         <div class="card-body bg-light">
             <p>ID: ${engineer.id}</p>
             <p>E-mail: <a href="mailto:${engineer.email}">${engineer.email}</a></p>
-            <p>GitHub: <a href="https://github.com/${engineer.github}" target="_blank">${engineer.github}</a></p> 
+            <p>GitHub: <a href="https://github.com/${engineer.githubName}" target="_blank">${engineer.githubName}</a></p> 
         </div>    
     </div>    
         `
@@ -57,19 +57,19 @@ const templateHtml = (data) => {
 
     for (let i = 0; i < data.length; i++) {
         const teamMember = data[i];
-        const role = teamMember.getRole();
+        const role = teamMember.role;
 
-        if (role === "Manager") {
+        if (role === "manager") {
             const managerCard = addManager(teamMember);
 
             pageArray.push(managerCard);
         }
-        if (role === "Intern") {
+        if (role === "intern") {
             const internCard = addIntern(teamMember);
 
             pageArray.push(internCard);
         }
-        if (role === "Engineer") {
+        if (role === "engineer") {
             const engineerCard = addEngineer(teamMember);
 
             pageArray.push(engineerCard);

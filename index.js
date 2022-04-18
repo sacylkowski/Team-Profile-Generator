@@ -36,9 +36,9 @@ function addManager() {
         }
     ])
         .then(answers => {
-            let { managerName, managerID, managerEmail, managerOfficeNum } = answers;
+            let { managerName, managerId, managerEmail, managerOfficeNum } = answers;
             console.log(answers);
-            const manager = new Manager(managerName, managerID, managerEmail, managerOfficeNum);
+            const manager = new Manager(managerName, managerId, managerEmail, managerOfficeNum);
 
             teamMembers.push(manager);
 
@@ -72,9 +72,9 @@ function addIntern() {
         }
     ])
         .then(answers => {
-            let { internName, internID, internEmail, internSchoolName } = answers;
+            let { internName, internId, internEmail, internSchoolName } = answers;
             console.log(answers);
-            const intern = new Intern(internName, internID, internEmail, internSchoolName);
+            const intern = new Intern(internName, internId, internEmail, internSchoolName);
 
             teamMembers.push(intern);
 
@@ -137,22 +137,23 @@ function addTeamMember() {
         })
 }
 
-function generatePage()
-    // writing the data to the new HTML page
-    fs.writeFile("./dist/index.html", templateHtml(teamMembers), err => {
-        if (err) {
-            return console.error(err);
-        } else {
-            console.log("Your team directory has been made!  Checkout index.html to see the page.")
-            fs.copyFile("./src/style.css", "./dist/style.css", err => {
-                if (err) {
-                    console.error(err);
-                    return;
-                };
-            });
-        };
-    });
+function generatePage() {
+// writing the data to the new HTML page
+fs.writeFile("./dist/index.html", templateHtml(teamMembers), err => {
+    if (err) {
+        return console.error(err);
+    } else {
+        console.log("Your team directory has been made!  Checkout index.html to see the page.");
+        fs.copyFile("./src/style.css", "./dist/style.css", err => {
+            if (err) {
+                console.error(err);
+                return;
+            };
+        });
+    };
+});
+}
 
 
-    // calling to addManager once the program is running
-    addManager();
+// calling to addManager once the program is running
+addManager();
