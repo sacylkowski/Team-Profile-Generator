@@ -7,11 +7,15 @@
   To install required dependecies, run the following command:
   npm install
 
+  ## Test
+  To run tests, run the following command:
+  npm run test
+
   ## Usage
   This app is simple to use.  You fill out the prompts appropriately and the directory is made.
   <img src="code-example.png" alt="image of program running" width="1206" />
 
- <a href="https://drive.google.com/file/d/1mnIr4vxsyMJhQuSlWARw5TUaXLJjeFps/view">Click here to see demo video.</a>
+ <a href="https://drive.google.com/file/d/1irWLAuNMl6eU2Lj8oJ2x1aelxecQ8mwr/view">Click here to see demo video.</a>
 
   ## Questions
   If you have any questions, please reach out on <a href="https://github.com/sacylkowski/">GitHub</a> or you can <a href="mailto:sacylkowski@gmail.com">E-mail me</a>.
